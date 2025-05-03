@@ -1,28 +1,34 @@
-const { spawn } = require('child_process');
+const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
 function runCCode(code, callback) {
-    const filePath = path.join(__dirname, 'temp.c');
-    const outputPath = path.join(__dirname, 'temp.out');
+    const workDir = path.join(__dirname, 'temp');
+    const filePath = path.join(workDir, 'code.c');
+    const exePath = path.join(workDir, 'a.out');
 
-    fs.writeFileSynce(filePath, code);
+    if (!fs.existsSync(workDir)) {
+        fs.mkdirSync(workDir);
+    }
 
-    const compile = spawn('gcc', [filePath, '-o', outputPath]);
+    fs.writeFileSync(filePath, code);
 
-    compile.on('close', (code) => {
-        if (code === 0) {
-            const run = spawn(outputPath);
-            let result = '';
+    const compileCmd = `gcc ${filePath} -o ${exePath}`;
+    const runCmd = `${exePath}`;
 
-            run.stdout.on('data', data => result += data.toString());
-            run.stderr.on('data', data => result += data.toString());
-
-            run.on('close', () => callback(null, result));
-        } else {
-            callback('Compilation failed', null);
+    exec(compileCmd, (compileErr, stdout, stderr) => {
+        if (compileErr) {
+            return callback(`Compilation Error:\n${stderr}`);
         }
-    });
+
+        exec(runCmd, { timeout: 3000 }, (runErr, output, runStderr) => {
+            if (runErr) {
+                return callback(`Runtime Error:\n${runStderr || runErr.message}`);
+            }
+
+            callback(null, output);
+        });
+    }); 
 }
 
 module.exports = { runCCode };

@@ -8,11 +8,20 @@ function createWindow() {
     height: 800,
     webPreferences: {
       nodeIntegration: true,         
-      contextIsolation: false        
+      contextIsolation: true,
+      preload: path.join(__dirname, 'src/preload.js')   
     }
   });
 
   win.loadFile('src/app/index.html');
 }
+
+ipcMain.handle('run-c-code', async (event, code) => {
+  return new Promise((resolve) => {
+    runCCode(code, (err, output) => {
+      resolve(err ? err: output);
+    });
+  });
+});
 
 app.whenReady().then(createWindow);
