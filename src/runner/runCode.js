@@ -26,6 +26,22 @@ function runCCode(code, callback) {
                 return callback(`Runtime Error:\n${runStderr || runErr.message}`);
             }
 
+            const fileResults = {};
+            for (const [filename, expectedContent] of Object.entries(expectedFiles)) {
+                const filePath = path.join(workDir, filename);
+                if (fs.existsSync(filePath)) {
+                    const actual = fs.readFileSync(filePath, 'utf-8').trim();
+                    fileResults[filename] = actual === expectedContent.trim()
+                        ? '✅ File matches'
+                        : `❌ Expected "${expectedContent}", found "${actual}"`;
+                } else {
+                    fileResults[filename] = '❌ File not found';
+                } 
+            }
+
+            const resultString = output.trim() + '\n\nFile Checks:\n' + Object.entries(fileResults)
+                .map(([file, res]) => `${file}: ${res}`)
+                .join('\n');
             callback(null, output);
         });
     }); 

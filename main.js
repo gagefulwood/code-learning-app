@@ -16,12 +16,13 @@ function createWindow() {
   win.loadFile('src/app/index.html');
 }
 
-ipcMain.handle('run-c-code', async (event, code) => {
+ipcMain.handle('run-c-code', async (_, code, expectedFiles = {}) => {
   return new Promise((resolve) => {
-    runCCode(code, (err, output) => {
-      resolve(err ? err: output);
+    runCCode(code, expectedFiles, (err, result) => {
+      resolve(err || result);
     });
   });
 });
+
 
 app.whenReady().then(createWindow);

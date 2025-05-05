@@ -1,9 +1,20 @@
-<div id="exercise-container">
-    <h1 id="exercise-title">Exercise</h1>
-    <p id="exercise-description"></p>
+<div class="exercise-container">
+  <section class="info-container">
+    <h1 id="exercise-title">Exercise Title</h1>
+    <p id="exercise-description">Description</p>
+    <div id="test-cases">
+      none
+    </div>
+  </section>
   
-    <div id="editor" style="height: 400px;"></div>
-    <button id="run-btn">Run Code</button>
-    <pre id="output-area"></pre>
-  </div>
+  <section class="editor-container">
+    <div id="editor"></div>
+    <div class="controls">
+      <button id="run-btn">Run Code</button>
+      <pre id="output-area"></pre>
+    </div>
+  </section>
+    
+  <script type="module" src="../scripts/renderer.js"></script>
+</div>
   

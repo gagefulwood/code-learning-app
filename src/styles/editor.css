@@ -1,0 +1,51 @@
+.exercise-container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+    font-family: sans-serif;
+  }
+  
+  .info-container {
+    flex: 1; /* Takes up 1 part of the available space */
+    padding: 20px;
+    background-color: #f4f4f4;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  
+  .editor-container {
+    flex: 2; /* Takes up 2 parts of the available space */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+  }
+  
+  #editor {
+    flex: 1; /* Fills the remaining space */
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .controls {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #run-btn {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  #output-area {
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    padding: 10px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    border: 1px solid #ccc;
+    height: 150px;
+  }
+  

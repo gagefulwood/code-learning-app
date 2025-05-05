@@ -1,7 +1,14 @@
 [
     {
-        "id": "excercise1",
-        "title": "Exercise Name",
-        "description": "description"
+        "id": "file-write-test",
+        "title": "Write to a File",
+        "description": "description",
+        "expectedOutput": "",
+        "expectedFiles": {
+            "output.txt": "Hello"
+        },
+        "requirements": [
+            "Program must write 'Hello' to output.txt"
+        ]
     }
 ]

@@ -5,10 +5,11 @@ export function setupExercisePage(data) {
 
   const title = exerciseData.title || 'Exercise';
   const desc = exerciseData.description || 'Complete the task below.';
-  const defaultCode = exerciseData.defaultCode || '#include #include <stdio.h>\n\nint main() {\n  printf("Hello, world!\\n");\n  return 0;\n}';
+  const defaultCode = exerciseData.defaultCode || '#include <stdio.h>\n\nint main() {\n  printf("Hello, world!\\n");\n  return 0;\n}';
+  const expectedFiles = exerciseData.expectedFiles || {};
 
   document.getElementById('exercise-title').textContent = title;
   document.getElementById('exercise-description').textContent = desc;
 
-  setupEditor(defaultCode);
+  setupEditor(defaultCode, expectedFiles);
 }
